@@ -1,0 +1,56 @@
+- Dense block has three stages connected by dense connnection:
+    + The first stage and second stage contain:
+        > One convolution layer with 3 x 3 kernel size
+        > ReLU activation layer
+        > One group normalization layer
+    + The third stage contains only one convolution with 1 x 1 kernel size
+
+- Contraction path contains:
+    + Consecutive dense blocks connected by the average pooling layer
+    the height and width of the image gradually reduce (downsampling, because of pooling) 
+    the number of channels/depth (number of filters used) gradually increase
+
+- Convolution layer comprises of: 
+    Input = Corresponding dense block on contraction path x & Output of preceding transposed convolution layer g
+        The output of dense block is sent to the expansion path via skip-connection
+    + Multiple convolution layers and pooling layers
+
+- Expansion path contains:
+    + Consecutive convolution blocks connected by the transposed convolution layer
+
+- Attention gate:
+    is added to each skip-connection, with the aim to eliminate unimportant feature regions
+    and allow important features containing useful information to pass through
+    > Both x and g are fed into a convolution layer with 1 x 1 kernel size to have the same number of channels
+    > Combine them by element-wise addition and fed into ReLU activation layer to perform non-linear
+    > Passes through a convolution layer to make a mask having one channel, is applied with "sigmoid"
+
+- Extra features
+    Weekdays feature
+        + Use one-hot encoding to convert each day of the dataset to a seven-element vector
+        + To add all weekdays vector to every pixel of input frame, we build a tensor whose size is 495 x 436 x 7, 
+        then concate the tensor into the input frame
+
+    Time-a-day feature
+        f_time(t) that maps time to coordinate of a point on the trigonometric unit circle
+        
+
+- Outputs
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
